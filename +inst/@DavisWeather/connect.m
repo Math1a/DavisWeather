@@ -31,6 +31,6 @@ else
     S = serialport(Port,Baud); % Set the port and the baud rate
 end
 
-flush(S); % Clear the pervious output
+flush(S) % Clear the pervious output
 F.SerialResource = S;
 end

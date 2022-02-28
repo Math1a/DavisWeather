@@ -25,12 +25,14 @@ resp = read(S, 99, 'uint8'); % The station uses a loop, so the 99 bytes will com
 
 clear S % Close the serial port, this is important, otherwise Matlab won't be able to open it again
 
-inTemp = bin2dec(string(dec2bin(resp(11))) + string(dec2bin(resp(10)))); % Read and convert bits into ushort
-F.InsideTemperature = (5/9)*((inTemp/10)-32);
-
-F.InsideHumidity = resp(12);
-
-barometer = bin2dec(string(dec2bin(resp(9))) + string(dec2bin(resp(8))));
-F.Barometer = ((barometer/1000)/29.53);
+F.InsideTemperature  = (5/9)*((byteFlip(resp(10:11))/10)-32)
+F.InsideHumidity     = resp(12)
+F.Barometer          = ((byteFlip(resp(8:9))/1000)/29.53)
+F.OutsideTemperature = (5/9)* (byteFlip(resp(13:14))/10 -32)
+F.OutsideHumidity    = resp(34)
+F.WindSpeed          = resp(15) * 1.609344
+F.WindDirection      = byteFlip(resp(17:18))
+F.Rain               = byteFlip(resp(42:43)) * 0.2
+F.SolarRadiation     = byteFlip(resp(45:46))
 
 end
