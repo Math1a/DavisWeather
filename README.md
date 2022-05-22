@@ -39,8 +39,6 @@ W.getData
 
 
 ## This class is still incomplete. Known issues:
-- [ ] CRC not yet implemented
+- [ ] CRC not yet implemented (Altough the console checks for it)
 - [ ] Serial port should be either constant, or not have any other open serial devices
-- [ ] The wind vane displays faulty values when over 180*
-- [ ] Barometer dsiplays correct data on the console, but it transmits faulty data.
 - [ ] The outdoor humidity and temperature sensors do not agree with the indoor ones! Sensors should be calibrated
