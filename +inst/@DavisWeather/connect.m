@@ -19,8 +19,13 @@ if ~exist('Port','var') || isempty(Port)
         try
             S = serialport(ports(i),Baud); % Set the port and the baud rate
             S.writeline("TEST")
-            pause(0.1)
-            resp = S.read(8, 'string');
+            pause(0.5)
+            if S.NumBytesAvailable >= 8
+                resp = S.read(8, 'string');
+            else
+                clear S
+                error("Not a weather console! Try another port.")
+            end
             if resp.contains("TEST")
                 found = 1;
             else
@@ -29,6 +34,9 @@ if ~exist('Port','var') || isempty(Port)
             end
         catch
             continue
+        end
+        if found == 1
+            break
         end
     end
     if found ~= 1
