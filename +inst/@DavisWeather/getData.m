@@ -19,6 +19,10 @@ while ~valid
         end
     end
     S.flush
+    if ~valid
+       S.writeline("LPS 1 1")
+       pause(0.5)
+    end
 end
 
 clear S % Close the serial port, this is important, otherwise Matlab won't be able to open it again
