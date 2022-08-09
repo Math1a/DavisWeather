@@ -14,7 +14,10 @@ classdef DavisWeather < handle % obs.LAST_Handle
     
     properties(Hidden)
         LastDataTaken       % The last time that the weather data was updated
-        SerialResource
+        SerialResource      % The serial port
+        DataPath = '/home/ocs/database/'
+        FileName            % The log filename
+        Logger              % The timer that logs the weather data
     end
     
     methods
@@ -27,61 +30,71 @@ classdef DavisWeather < handle % obs.LAST_Handle
             end
             F.LastDataTaken = 0;
         end
+        
+        function delete(F)
+            if exist(F.Logger)
+                F.Logger.delete
+            end
+        end
+        
+        function F = stoplogging(F)
+            F.Logger.delete
+        end
     end
     
     methods
         % getters and setters
         function d = get.InsideTemperature(F)
             if F.LastDataTaken < now - 1/1440 % updates every minute at most
-            F.getData;
+                F.getData;
             end
             d = F.InsideTemperature;
         end
         function d = get.InsideHumidity(F)
             if F.LastDataTaken < now - 1/1440 % updates every minute at most
-            F.getData
+                F.getData
             end
             d = F.InsideHumidity;
         end
         function d = get.Barometer(F)
             if F.LastDataTaken < now - 1/1440 % updates every minute at most
-            F.getData
+                F.getData
             end
             d = F.Barometer;
         end
         function d = get.OutsideTemperature(F)
             if F.LastDataTaken < now - 1/1440 % updates every minute at most
-            F.getData
+                F.getData
             end
             d = F.OutsideTemperature;
         end
         function d = get.OutsideHumidity(F)
             if F.LastDataTaken < now - 1/1440 % updates every minute at most
-            F.getData
+                F.getData
             end
             d = F.OutsideHumidity;
         end
         function d = get.WindSpeed(F)
             if F.LastDataTaken < now - 1/1440 % updates every minute at most
-            F.getData
+                F.getData
             end
             d = F.WindSpeed;
         end
         function d = get.WindDirection(F)
             if F.LastDataTaken < now - 1/1440 % updates every minute at most
-            F.getData
+                F.getData
             end
             d = F.WindDirection;
         end
         function d = get.Rain(F)
             if F.LastDataTaken < now - 1/1440 % updates every minute at most
-            F.getData
+                F.getData
             end
             d = F.Rain;
         end
         function d = get.SolarRadiation(F)
             if F.LastDataTaken < now - 1/1440 % updates every minute at most
-            F.getData
+                F.getData
             end
             d = F.SolarRadiation;
         end
