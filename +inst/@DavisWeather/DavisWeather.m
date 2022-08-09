@@ -19,8 +19,12 @@ classdef DavisWeather < handle % obs.LAST_Handle
     
     methods
         % constructor and destructor
-        function F=DavisWeather()
-            F.connect;
+        function F=DavisWeather(port)
+            if exist('port') && ~isempty(port)
+                F.connect(port)
+            else
+                F.connect;
+            end
             F.LastDataTaken = 0;
         end
     end
