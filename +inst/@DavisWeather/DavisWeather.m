@@ -38,7 +38,7 @@ classdef DavisWeather < handle % obs.LAST_Handle
             end
         end
         
-        function F = stoplogging(F)
+        function F = stopLogging(F)
             F.Logger.delete
         end
     end

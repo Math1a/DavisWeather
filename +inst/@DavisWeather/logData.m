@@ -2,7 +2,7 @@
 %Parameters:
 %D.DataPath: The folder in which the log files will be saved
 %D.Period: The interval between each log
-function F = logdata(F)
+function F = logData(F)
 
 % Check if logger is already running
 try
@@ -17,10 +17,10 @@ end
 
 % Make the directory (if it dosen't exist), and create the csv file
 mkdir(F.DataPath)
-format = 'yyyy-mm-ddTHH:MM:SSZ';
+format = 'yyyy-mm-ddTHH:MM:SS';
 file = strcat(F.DataPath,'/DavisData_', datestr(now, format), '.csv');
 fid = fopen(file, 'w');
-fprintf(fid, "InsideTemperature,InsideHumidity,Barometer,OutsideTemperature,OutsideHumidity,WindSpeed,WindDirection,Rain,SolarRadiation\n");
+fprintf(fid, "InsideTemperature,InsideHumidity,Barometer,OutsideTemperature,OutsideHumidity,WindSpeed,WindDirection,Rain,SolarRadiation,Time\n");
 fclose(fid);
 
 F.FileName = file;
@@ -43,9 +43,10 @@ function savedata(F)
 % Get data and open the file
 F.getData;
 fid = fopen(F.FileName, 'a');
-fprintf(fid, "%f,%d,%f,%f,%d,%f,%d,%f,%d\n", ...
+fprintf(fid, "%f,%d,%f,%f,%d,%f,%d,%f,%d,%s\n", ...
     F.InsideTemperature,F.InsideHumidity,F.Barometer, ...
     F.OutsideTemperature,F.OutsideHumidity,F.WindSpeed, ...
-    F.WindDirection,F.Rain,F.SolarRadiation);
+    F.WindDirection,F.Rain,F.SolarRadiation, ...
+    datestr(now, 'yyyy-mm-dd HH:MM:SS'));
 fclose(fid);
 end
