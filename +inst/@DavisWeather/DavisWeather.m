@@ -17,6 +17,7 @@ classdef DavisWeather < handle % obs.LAST_Handle
         SerialResource      % The serial port
         DataPath = '/home/ocs/database/'
         FileName            % The log filename
+        Period = 60         % The interval for each write in the log file
         Logger              % The timer that logs the weather data
     end
     
