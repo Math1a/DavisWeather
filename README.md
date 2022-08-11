@@ -7,7 +7,7 @@ The calculations and serial protocols are as mentioned in [This Datasheet](https
 
 To set up the console, see [Console Manual](https://cdn.shopify.com/s/files/1/0515/5992/3873/files/07395.234_Manual_VP2__RevZ_web.pdf?v=1647548782)
 
-## hOw Do I cOnNeCt ThE wEaThEr StAtIoN???
+## How do I connect the weather station?
 - If the weather station is connected to the EnviroMonitor Gateway (separate big white solar panel box), disconnect it. Connect the outside sensors to the console. The EnviroMonitor is unnecessary.
 - The console requires 2 USB connections; one for data transmission, and the other for power.
 - To initiate the connection, use:
@@ -34,11 +34,16 @@ W.getData
  Rain                % Rain rate in mm
  SolarRadiation      % Solar radiation in watt per meter squared
  ```
+- Note that this is only a portion of all the data that the weather station gives, and more data could be implemented if needed.
 
-
+## Data logging
+Start data logging:
+```matlab
+W.logData
+```
+- This function will read the weather station sensor data every ```W.Period``` seconds, and write it to a .csv table in ```W.Datapath```
 
 
 ## This class is still incomplete. Known issues:
-- [ ] CRC not yet implemented (Altough the console checks for it)
-- [ ] Serial port should be either constant, or not have any other open serial devices
+- [ ] CRC not implemented (Altough the console checks for it)
 - [ ] The outdoor humidity and temperature sensors do not agree with the indoor ones! Sensors should be calibrated
