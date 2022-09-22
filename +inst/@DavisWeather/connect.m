@@ -14,9 +14,10 @@ if ~exist('Baud','var') || isempty(Baud)
 end
 
 if ~exist('Port','var') || isempty(Port)
-    ports = serialportlist("available")'; % Check Avalible ports
+    ports = serialportlist()'; % Check Avalible ports
     for i = 1:length(ports)
         try
+            
             S = serialport(ports(i),Baud); % Set the port and the baud rate
             S.writeline("TEST")
             pause(0.5)
@@ -42,6 +43,7 @@ if ~exist('Port','var') || isempty(Port)
     if found ~= 1
         error("Weather Station could not be reached, check connection and serial port.")
     end
+    io.msgLog(LogLevel.Info, 'Davis Weather Station at %s', ports(i))
 else
     S = serialport(Port,Baud); % Set the port and the baud rate
 end

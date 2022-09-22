@@ -10,10 +10,10 @@ classdef DavisWeather < handle % obs.LAST_Handle
         WindDirection       % Wind direction in angles, 360 is north
         Rain                % Rain rate in mm
         SolarRadiation      % Solar radiation in watt per meter squared
+        LastDataTaken       % The last time that the weather data was updated
     end
     
     properties(Hidden)
-        LastDataTaken       % The last time that the weather data was updated
         SerialResource      % The serial port
         DataPath = '/home/ocs/database/'
         FileName            % The log filename
@@ -22,10 +22,10 @@ classdef DavisWeather < handle % obs.LAST_Handle
     end
     
     methods
-        % constructor and destructor
+        % constructor and destructor = inst
         function F=DavisWeather(port)
             if exist('port') && ~isempty(port)
-                F.connect(port)
+                F.connect(port);
             else
                 F.connect;
             end
@@ -98,6 +98,10 @@ classdef DavisWeather < handle % obs.LAST_Handle
                 F.getData
             end
             d = F.SolarRadiation;
+        end
+        
+        function d = get.LastDataTaken(F)
+            d = F.LastDataTaken;
         end
     end
     
