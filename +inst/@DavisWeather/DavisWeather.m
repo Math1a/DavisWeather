@@ -122,7 +122,7 @@ classdef DavisWeather < handle % obs.LAST_Handle
             if ~exist('mind','var')
                 mind=-Inf;
             end
-            if isempty(d) || d<mind || d>maxd
+            if ~isempty(d) && (d<mind || d>maxd)
                 d=NaN;
             end
         end
