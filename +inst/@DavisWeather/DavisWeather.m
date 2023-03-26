@@ -50,36 +50,42 @@ classdef DavisWeather < handle % obs.LAST_Handle
                 F.getData;
             end
             d = F.InsideTemperature;
+            d = F.validateData(d,-50,150);
         end
         function d = get.InsideHumidity(F)
             if F.LastDataTaken < now - 1/1440 % updates every minute at most
                 F.getData
             end
             d = F.InsideHumidity;
+            d = F.validateData(d,-10,110);
         end
-        function d = get.Barometer(F)
+        function d = get.Barometer(F) % in bar
             if F.LastDataTaken < now - 1/1440 % updates every minute at most
                 F.getData
             end
             d = F.Barometer;
-        end
+            d = F.validateData(d,0.8,1.2);
+       end
         function d = get.OutsideTemperature(F)
             if F.LastDataTaken < now - 1/1440 % updates every minute at most
                 F.getData
             end
             d = F.OutsideTemperature;
+            d = F.validateData(d,-50,150);
         end
         function d = get.OutsideHumidity(F)
             if F.LastDataTaken < now - 1/1440 % updates every minute at most
                 F.getData
             end
             d = F.OutsideHumidity;
+            d = F.validateData(d,-10,110);
         end
-        function d = get.WindSpeed(F)
+        function d = get.WindSpeed(F) % in km/h
             if F.LastDataTaken < now - 1/1440 % updates every minute at most
                 F.getData
             end
             d = F.WindSpeed;
+            d = F.validateData(d,0,150);
         end
         function d = get.WindDirection(F)
             if F.LastDataTaken < now - 1/1440 % updates every minute at most
@@ -105,4 +111,22 @@ classdef DavisWeather < handle % obs.LAST_Handle
         end
     end
     
+    methods(Static=true)
+        
+        function d=validateData(d,mind,maxd)
+            % validate the numeric datum d: return NaN if it is empty, or
+            %  falls outside the interval [mind,maxd]
+            if ~exist('maxd','var')
+                maxd=Inf;
+            end
+            if ~exist('mind','var')
+                mind=-Inf;
+            end
+            if isempty(d) || d<mind || d>maxd
+                d=NaN;
+            end
+        end
+
+    end
+
 end
