@@ -92,6 +92,7 @@ classdef DavisWeather < handle % obs.LAST_Handle
                 F.getData
             end
             d = F.WindDirection;
+            d = F.validateData(d,-360,360);
         end
         function d = get.Rain(F)
             if F.LastDataTaken < now - 1/1440 % updates every minute at most
